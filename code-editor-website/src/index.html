@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexoraCode IDE - Premium Cloud Editor</title>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+    <div class="logo">
+        <span class="logo-lightning">🦾</span>
+        <span class="logo-text">NEXORA<span class="logo-dot">.</span>CODE</span>
+    </div>
+    <div class="right-section">
+        <!-- PROFILE -->
+        <div class="profile-container">
+            <div class="avatar" id="avatarBtn">
+                <img src="default_avatar.png" alt="N">
+            </div>
+            <div class="profile-dropdown" id="profilePanel">
+                <!-- Dropdown Header -->
+                <div class="dropdown-header">
+                    <div class="header-avatar" id="dropdownAvatarBtn" style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--accent-blue); overflow: hidden; display: flex; justify-content: center; align-items: center; background: #000;">
+                        <img src="default_avatar.png" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="header-info">
+                        <span class="user-name">Nandini Manikyam</span>
+                        <span class="user-email">nandinimanikyam32@gmail.com</span>
+                    </div>
+                </div>
+                <!-- Dropdown Menu Links -->
+                <ul class="dropdown-menu">
+                    <li id="profileItem"><a href="#" id="menuProfile" class="menu-item"><span class="menu-icon">👤</span> Profile</a></li>
+                    <li id="savedCodesItem"><a href="#" id="menuSavedCodes" class="menu-item"><span class="menu-icon">📂</span> Saved Codes</a></li>
+                    <li id="signInItem"><a href="login.html" class="menu-item"><span class="menu-icon">🔑</span> Sign In</a></li>
+                    <li id="generalItem"><a href="#" id="menuGeneral" class="menu-item"><span class="menu-icon">📝</span> General</a></li>
+                    <li id="settingsItem"><a href="#" id="menuSettings" class="menu-item"><span class="menu-icon">⚙️</span> Settings</a></li>
+                    <li>
+                        <div class="menu-item points-item">
+                            <span class="menu-icon">⭐</span> Points <strong id="menu-points">0</strong>
+                        </div>
+                    </li>
+                </ul>
+                <hr class="dropdown-divider">
+                <!-- Dropdown Footer -->
+                <div class="dropdown-footer">
+                    <a href="#" class="menu-item logout-item" onclick="logout()"><span class="menu-icon">🚪</span> Sign Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ================= MAIN AREA ================= -->
+<div class="container">
+    <!-- CODE BOX -->
+    <div class="editor-box">
+        <div class="editor-header">
+            <div class="editor-tabs">
+                <div class="editor-tab active" id="editorTab">
+                    <span class="tab-icon">📄</span>
+                    <span id="tabFileName">main.c</span>
+                </div>
+            </div>
+            <!-- LANGUAGE MENU -->
+            <div class="lang-selector-wrapper">
+                <span class="lang-label">Language:</span>
+                <select id="languageSelect" class="lang-menu">
+                    <option value="C">C</option>
+                    <option value="C++">C++</option>
+                    <option value="Java">Java</option>
+                    <option value="html">HTML</option>
+                    <option value="css">CSS</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="python">Python</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="editor-area-wrapper">
+            <textarea id="editor" spellcheck="false">Write your code Here.......</textarea>
+        </div>
+        
+        <div class="editor-footer">
+            <div class="points-badge">
+                <span class="star-icon">⭐</span> Points: <span id="points">0</span>
+            </div>
+            
+            <div class="buttons">
+                <button id="runBtn" class="glow-button btn-run">▶ Run Code</button>
+                <button id="clearBtn" class="glow-button btn-clear">🧹 Clear</button>
+                <button id="saveBtn" class="glow-button btn-save">💾 Save Code</button>
+            </div>
+        </div>
+    </div>
+    <!-- OUTPUT BOX -->
+    <div class="output-box">
+        <div class="output-header">
+            <div class="terminal-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <span class="terminal-title">Terminal Console</span>
+        </div>
+        <div class="output-frame-wrapper">
+            <iframe id="output" name="output_frame"></iframe>
+        </div>
+    </div>
+</div>
+<!-- ================= SETTINGS MODAL ================= -->
+<div id="settingsModal" class="modal-overlay">
+    <div class="modal-container">
+        
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h3>⚙️ Account Control Center</h3>
+            <button class="close-modal-btn" id="closeModalBtn">&times;</button>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+            
+            <!-- Sidebar Navigation -->
+            <div class="modal-sidebar">
+                <button class="tab-btn active" data-tab="profile-tab">👤 Profile</button>
+                <button class="tab-btn" data-tab="saved-codes-tab">📂 Saved Codes</button>
+                <button class="tab-btn" data-tab="general-tab">📝 General</button>
+                <button class="tab-btn" data-tab="settings-tab">⚙️ Settings</button>
+            </div>
+            <!-- Tab Content Pane -->
+            <div class="modal-content-pane">
+                
+                <!-- Profile Tab -->
+                <div class="tab-content active" id="profile-tab">
+                    <!-- Dashboard Pane -->
+                    <div id="profileDashboard" class="profile-dashboard">
+                        <!-- Will be dynamically populated via script.js -->
+                        <p style="color: var(--text-muted); text-align: center; margin-top: 50px;">Loading profile dashboard...</p>
+                    </div>
+                    <!-- Edit Form Pane (hidden by default) -->
+                    <div id="profileEditForm" class="profile-edit-form" style="display: none;">
+                        <h3 style="margin-bottom: 15px;">Edit Profile Information</h3>
+                        <!-- Avatar Selector Section -->
+                        <div class="avatar-selector-section" style="margin-bottom: 20px; background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border-color); padding: 16px; border-radius: 10px;">
+                            <label style="font-size: 11px; color: var(--text-muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 10px;">Profile Avatar</label>
+                            <div class="avatar-selector-wrapper" style="display: flex; gap: 20px; align-items: center;">
+                                <div class="active-avatar-preview" style="width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--accent-blue); overflow: hidden; display: flex; justify-content: center; align-items: center; background: #000; box-shadow: 0 0 15px var(--accent-blue-glow);">
+                                    <img src="default_avatar.png" id="modalAvatarPreview" alt="Avatar Preview" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="avatar-options-container" style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+                                    <span style="font-size: 12px; color: var(--text-muted);">Select preset or upload your own:</span>
+                                    <div class="avatar-presets-grid" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                        <div class="avatar-preset active" data-avatar="default_avatar.png" style="width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--accent-blue); overflow: hidden; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s ease;">
+                                            <img src="default_avatar.png" alt="Default" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        <div class="avatar-preset" data-avatar="👨‍💻" style="width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border-color); overflow: hidden; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 18px; background: #12141a; transition: all 0.2s ease;">👨‍💻</div>
+                                        <div class="avatar-preset" data-avatar="👩‍💻" style="width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border-color); overflow: hidden; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 18px; background: #12141a; transition: all 0.2s ease;">👩‍💻</div>
+                                        <div class="avatar-preset" data-avatar="🤖" style="width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border-color); overflow: hidden; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 18px; background: #12141a; transition: all 0.2s ease;">🤖</div>
+                                        <div class="avatar-preset" data-avatar="🥷" style="width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border-color); overflow: hidden; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 18px; background: #12141a; transition: all 0.2s ease;">🥷</div>
+                                        <div class="avatar-preset" data-avatar="👾" style="width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border-color); overflow: hidden; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 18px; background: #12141a; transition: all 0.2s ease;">👾</div>
+                                    </div>
+                                    <div class="custom-avatar-upload" style="margin-top: 4px;">
+                                        <input type="file" id="customAvatarInput" accept="image/*" style="display: none;">
+                                        <button class="upload-avatar-btn" onclick="document.getElementById('customAvatarInput').click()" style="background: rgba(255, 255, 255, 0.05); border: 1px dashed var(--text-muted); color: var(--text-main); font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;">📤 Upload Custom Image</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="profileName">Full Name</label>
+                            <input type="text" id="profileName" value="">
+                        </div>
+                        <div class="form-group" style="margin-top: 10px;">
+                            <label for="profileEmail">Email Address</label>
+                            <input type="email" id="profileEmail" value="">
+                        </div>
+                        <div class="form-group" style="margin-top: 10px;">
+                            <label for="profilePhone">Phone Number</label>
+                            <input type="text" id="profilePhone" value="">
+                        </div>
+                        <div style="display: flex; gap: 10px; margin-top: 20px;">
+                            <button class="save-changes-btn" onclick="saveProfileData()">Save Profile</button>
+                            <button class="save-changes-btn" style="background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border-color);" onclick="toggleProfilePane('dashboard')">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Saved Codes Tab -->
+                <div class="tab-content" id="saved-codes-tab">
+                    <h3>📂 Saved Codes</h3>
+                    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Access your cloud-saved code submissions and editor history.</p>
+                    <div class="saved-codes-list" id="savedCodesList">
+                        <!-- Loaded dynamically via script.js -->
+                        <p style="color: var(--text-muted); text-align: center; margin-top: 20px;">Loading saved codes...</p>
+                    </div>
+                </div>
+                <!-- General Tab -->
+                <div class="tab-content" id="general-tab">
+                    <h3>📝 General Information</h3>
+                    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Configure your developer profile metadata.</p>
+                    
+                    <div class="form-group">
+                        <label for="generalNickname">Nickname</label>
+                        <input type="text" id="generalNickname" placeholder="e.g. CodeNinja">
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label for="generalGender">Gender</label>
+                        <select id="generalGender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label for="generalAddress">Location / Address</label>
+                        <input type="text" id="generalAddress" placeholder="e.g. San Francisco, CA">
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label for="generalDOB">Date of Birth</label>
+                        <input type="date" id="generalDOB">
+                    </div>
+                    <button class="save-changes-btn" onclick="saveGeneralData()">Save General Info</button>
+                </div>
+                <!-- Settings Tab -->
+                <div class="tab-content" id="settings-tab">
+                    <h3>⚙️ Account Settings</h3>
+                    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Manage your password and security options.</p>
+                    <div class="form-group">
+                        <label for="settingsCurrentPassword">Current Password</label>
+                        <input type="password" id="settingsCurrentPassword" placeholder="Enter current password">
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label for="settingsNewPassword">New Password</label>
+                        <input type="password" id="settingsNewPassword" placeholder="Enter new password">
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label for="settingsConfirmPassword">Confirm New Password</label>
+                        <input type="password" id="settingsConfirmPassword" placeholder="Confirm new password">
+                    </div>
+                    <button class="save-changes-btn" onclick="savePasswordSettings()">Update Password</button>
+                </div>
+            </div> <!-- modal-content-pane -->
+        </div> <!-- modal-body -->
+    </div> <!-- modal-container -->
+</div> <!-- settingsModal -->
+<script src="script.js"></script>
+</body>
+</html>

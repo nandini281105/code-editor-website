@@ -1,0 +1,38 @@
+{
+  "name": "code-editor-website",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node code-editor-website/src/backend/server.js",
+    "dev": "nodemon code-editor-website/src/backend/server.js"
+  },
+  "dependencies": {
+    "axios": "^1.17.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.6",
+    "express": "^4.22.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^9.6.3",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nandini281105/code-editor-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nandini281105/code-editor-website/issues"
+  },
+  "homepage": "https://github.com/nandini281105/code-editor-website#readme"
+}
